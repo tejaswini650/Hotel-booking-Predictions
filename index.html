@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel Booking Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5f9;
+            margin: 0;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+            color: #243b55;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            background: #243b55;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #141e30;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 18px;
+            background: #eaf3ff;
+            border-radius: 8px;
+        }
+
+        @media(max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Hotel Booking Reservation Prediction</h1>
+
+    <form action="/predict" method="POST">
+
+        <div class="form-grid">
+
+            <div>
+                <label>Hotel</label>
+                <select name="hotel">
+                    <option value="City Hotel" {% if booking_data.hotel == "City Hotel" %}selected{% endif %}>City Hotel</option>
+                    <option value="Resort Hotel" {% if booking_data.hotel == "Resort Hotel" %}selected{% endif %}>Resort Hotel</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Lead Time</label>
+                <input type="number" name="lead_time" value="{{ booking_data.lead_time }}" required>
+            </div>
+
+            <div>
+                <label>Arrival Year</label>
+                <input type="number" name="arrival_date_year" value="{{ booking_data.arrival_date_year }}" required>
+            </div>
+
+            <div>
+                <label>Arrival Month</label>
+                <input type="text" name="arrival_date_month" value="{{ booking_data.arrival_date_month }}" required>
+            </div>
+
+            <div>
+                <label>Arrival Week Number</label>
+                <input type="number" name="arrival_date_week_number" value="{{ booking_data.arrival_date_week_number }}" required>
+            </div>
+
+            <div>
+                <label>Arrival Day</label>
+                <input type="number" name="arrival_date_day_of_month" value="{{ booking_data.arrival_date_day_of_month }}" required>
+            </div>
+
+            <div>
+                <label>Weekend Nights</label>
+                <input type="number" name="stays_in_weekend_nights" value="{{ booking_data.stays_in_weekend_nights }}" required>
+            </div>
+
+            <div>
+                <label>Week Nights</label>
+                <input type="number" name="stays_in_week_nights" value="{{ booking_data.stays_in_week_nights }}" required>
+            </div>
+
+            <div>
+                <label>Adults</label>
+                <input type="number" name="adults" value="{{ booking_data.adults }}" required>
+            </div>
+
+            <div>
+                <label>Children</label>
+                <input type="number" name="children" value="{{ booking_data.children }}" required>
+            </div>
+
+            <div>
+                <label>Babies</label>
+                <input type="number" name="babies" value="{{ booking_data.babies }}" required>
+            </div>
+
+            <div>
+                <label>Meal</label>
+                <input type="text" name="meal" value="{{ booking_data.meal }}" required>
+            </div>
+
+            <div>
+                <label>Country</label>
+                <input type="text" name="country" value="{{ booking_data.country }}" required>
+            </div>
+
+            <div>
+                <label>Market Segment</label>
+                <input type="text" name="market_segment" value="{{ booking_data.market_segment }}" required>
+            </div>
+
+            <div>
+                <label>Distribution Channel</label>
+                <input type="text" name="distribution_channel" value="{{ booking_data.distribution_channel }}" required>
+            </div>
+
+            <div>
+                <label>Repeated Guest (0 or 1)</label>
+                <input type="number" name="is_repeated_guest" value="{{ booking_data.is_repeated_guest }}" min="0" max="1" required>
+            </div>
+
+            <div>
+                <label>Previous Cancellations</label>
+                <input type="number" name="previous_cancellations" value="{{ booking_data.previous_cancellations }}" required>
+            </div>
+
+            <div>
+                <label>Previous Bookings Not Canceled</label>
+                <input type="number" name="previous_bookings_not_canceled" value="{{ booking_data.previous_bookings_not_canceled }}" required>
+            </div>
+
+            <div>
+                <label>Reserved Room Type</label>
+                <input type="text" name="reserved_room_type" value="{{ booking_data.reserved_room_type }}" required>
+            </div>
+
+            <div>
+                <label>Deposit Type</label>
+                <input type="text" name="deposit_type" value="{{ booking_data.deposit_type }}" required>
+            </div>
+
+            <div>
+                <label>Customer Type</label>
+                <input type="text" name="customer_type" value="{{ booking_data.customer_type }}" required>
+            </div>
+
+            <div>
+                <label>ADR</label>
+                <input type="number" step="any" name="adr" value="{{ booking_data.adr }}" required>
+            </div>
+
+            <div>
+                <label>Required Car Parking Spaces</label>
+                <input type="number" name="required_car_parking_spaces" value="{{ booking_data.required_car_parking_spaces }}" required>
+            </div>
+
+            <div>
+                <label>Total Special Requests</label>
+                <input type="number" name="total_of_special_requests" value="{{ booking_data.total_of_special_requests }}" required>
+            </div>
+
+            <div>
+                <label>City</label>
+                <input type="text" name="city" value="{{ booking_data.city }}" required>
+            </div>
+
+        </div>
+
+        <button type="submit">Predict Reservation Status</button>
+
+    </form>
+
+
+    {% if prediction is defined %}
+
+    <div class="result">
+
+        <h2>Prediction Result: {{ prediction }}</h2>
+
+        <h3>Prediction Probabilities</h3>
+
+        {% for status, probability in probabilities.items() %}
+
+            <p>{{ status }} : {{ probability }}%</p>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
