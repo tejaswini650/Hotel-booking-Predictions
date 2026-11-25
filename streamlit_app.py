@@ -13,7 +13,7 @@ st.title("🏨 Hotel Booking Reservation Prediction")
 st.write("Enter booking details to predict reservation status.")
 
 # FastAPI URL
-API_URL = "http://127.0.0.1:8000/predict"
+API_URL = "https://hotel-booking-predictions.onrender.com/predict"
 
 # Booking form
 with st.form("booking_form"):
