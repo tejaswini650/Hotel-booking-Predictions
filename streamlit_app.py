@@ -158,10 +158,11 @@ if submitted:
 
     try:
         response = requests.post(
-            API_URL,
-            json=booking_data,
-            timeout=30
-        )
+    API_URL,
+    json=booking_data,
+    timeout=120
+)
+        
 
         if response.status_code == 200:
 
@@ -188,12 +189,10 @@ if submitted:
         else:
             st.error(f"API Error: {response.status_code}")
             st.write(response.text)
-
-    except requests.exceptions.ConnectionError:
-        st.error(
-            "Cannot connect to FastAPI. "
-            "Please start the FastAPI server first."
-        )
+    except requests.exceptions.ConnectionError as error:
+        st.error("FastAPI Connection Error")
+        st.write(str(error))
+    
 
     except requests.exceptions.RequestException as error:
         st.error(f"Request failed: {error}")
